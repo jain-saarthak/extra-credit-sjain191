@@ -1,89 +1,96 @@
-# Homework #2: D3 Simple
+# Homework: D3 Maps
 
-The purpose of this homework is to teach you some basic grammar and functionalities contained in D3.js:
+The purpose of this homework is to teach you some basic grammar and functionalities contained in D3.js. You will also learn how to draw and label geographic maps. By the end of this assignment, you should be able to:
 
-* Loading two datasets
-* Performing DOM selection
-* Filtering data attributes
-* Dynamically update visualized attributes
-* Creating axes
-* Adding a legend
-* Using the D3 domain, range, and scale functions
-* Adding axis labels
-* Creating circles and lines in svg
+* Load multiple datasets
+* Preprocess datasets
+* Perform DOM selections and dynamically update the visualized attributes
+* Create map boundaries
+* Use the D3 domain, range, and scale functions
+* Color the different regions of a map
+* Add legends for graph
+* Add dynamic tooltips for more interactive solutions
 
-The starter codes for homework assignments will be given with D3.v5. The latest D3 version is v7. You are allowed to using D3 v5, v6, or v7 for your homeworks and course project, but **you may not use a version older than v5**. (Note that newer versions of D3 may have slightly different syntax compared to in-class demos.)
+The starter codes for homework assignments is given in D3 version v7, which is the latest version of D3. 
 
+## Problem Statement
+A map helps the viewers to visualize a dataset a geographical dataset better. In this assignment, we will be implementing a simplified version of The American Presidency Project (https://www.presidency.ucsb.edu/statistics/elections) that helps the viewers analyze the results of all the U.S. Presidential Elections. For this assignment, we are just interested in analyzing the trends of the recent elections (starting from 2000). 
 
-
-## Data and Chart Description
-
-This assignment uses two csv files in the `dataset/` folder: `females_data.csv` and `males_data.csv`. From 1991 to 2022, these list a series of countries and their corresponding female and male employment rates respectively. In the visualization that you create (see image below), there will be a dropdown listing 5 countries; when the user changes the country in the dropdown, that country's employment rate will be shown for males and females using a lollipop chart.
-
-## To start the assignment
+## To complete the assignment
 
 * Clone this code to your local machine.
 * Using a local server (such as HTTP Simple Server), open the **index.html** file. Remember, homeworks will be graded using Firefox and Python's HTTP Simple Server.
 * Modify the source code according to the instructions below.
 * Commit and push the code back to this repository to submit your assignment. The finished page in `index.html` should look like this:
 
-![Completed Assignment](img/completed.png)
+![Completed Assignment](images/completed.png)
 
 ## Assignment Steps
 
-### Step 0: 
-In the HTML file's `head` section, add your name and email.
+### Step 0: Let's get Started 
+In the HTML file's `body` section, add your name and email.
 
-### Step 1:
-In the HTML file, there is a div with the id `my_dataviz`. Create an `svg` element inside this div. The `svg` should have a width of 1000 px and a height of 600 px.
+### Step 1: Create the SVG holder
+In the HTML file, there is a div with the id `my_dataviz`. Create an `svg` element inside this div. Remember to give your `svg` element a suitable height and width.
 
 > 🔍 **Note:** You can add the `svg` directly in the HTML or via Javascript in the `js/main.js` file.
 
-### Step 2:
-Create a `select` dropdown element in `index.html` inside the `div` element with a class `col-3`, and add 5 countries from the dataset as options for the dropdown. Use CSS to make the width of the select 100% for the `div` that it's inside. Then, add code so that, when the country in the `select` is changed, the draw lollipop chart function in `js/main.js` will be called.
+### Step 2: Add a Dropdown
+Create a `select` dropdown element in `index.html` where indicated by comments and add 6 years as options for the dropdown (2000, 2004, 2008, 2012, 2016 and 2020). Then, add code so that, when the year in the `select` is changed, the values of the election winners are updated and the draw map function in `js/main.js` is called. 
 
 > 🔍 **Hint:** There's multiple ways to do this! For example, you could add an `onchange` event, or create an event listener using Javascript. 
 
-### Step 3:
-In `main.js`, the males and females csv files are loaded. Once the data is loaded,  store it in one or more global variables so that when the country changes we don't need to load the datasets again.
+The finished dropdown should look like this:
 
-Since D3 doesn't have any information about the attribute types of the new files, it interprets every data value as a string. To use the quantatitive columns as such, you'll need to do some data wrangling to convert each row of the data to the correct numeric format. For your 5 selected countries, change the attribute type from string to numeric. D3's data loading functions (e.g. d3.csv) have a provision for that, which is documented [here](https://github.com/d3/d3-fetch/blob/master/README.md). You can also do the converting after you have loaded the data.
+![Completed Dropdown](images/dropdown.png)
 
-### Step 4:
-Next, create the x- and y-axes for your chart. The x-axis will show years, so we will use a `d3.scaleTime` for it. The y-axis will show employment rate, so we will use `d3.scaleLinear`. The y-axis range will be 1990-2023 (the data goes from 1991-2022, but we're adding 1 year padding on each end), and the x-axis range will be 0 to the maximum employment rate value (either male or female, whichever is highest) for the currently selected country over the time period.
+### Step 3: Download the Dataset 
+This assignment provides one JSON file in the `data/` folder: `us-states.json` that contains the coordinates of a state-wise map of the US. 
+You need to download the remaining datasets and place them in the `data/` folder. 
+You can download the state-wise election results from 1976-2020 from MIT Election Lab https://electionlab.mit.edu/. Look for the dataset titled `U.S. President 1976–2020` and use filters like election type (federal) and units (by state) to make your search easy. 
+Additionally, you need to download the election results which can be found here: https://www.kaggle.com/datasets/brandonconrady/us-presidential-election-results-1788-2020. Look for the file titled Winners.csv and download it to your `data/` folder.
 
-> 🔍 **Hint:** You'll need to use D3 `range` and `domain` to do this.
+### Step 4: Prepare and Load the Data
+There is a lot of data present in the `data/` folder that we do not need. You can either work off the existing datasets or filter and process only the useful information. 
 
-> 🔍 **Hint:** `d3.scaleTime` operates on Javascript `Date` objects, not numbers! Convert your start and end year values to `Date` objects when adding them to the domain.
+From the MIT election labs data, you just need to work with the columns year, state, candidatevotes and party\_simplified. You can also filter rows which have year <2000 and whose party\_simplified is either DEMOCRAT or REPUBLICAN. 
 
-### Step 5:
-We want to visualize the relationship of male and female employement rates in selected country from 1991 to 2022, in order to observe how this relationship has changed over the time period of our dataset. For this we will create a [lollipop chart](https://datavizproject.com/data-type/lollipop-chart/). A lollipop chart is similar to a bar chart, but instead of using rectangles to show data values, it shows lines with circles at the top.
+From the election results data, you can filter out the column Party\_Abbrev and rows having year <2000. 
 
-For each year in dataset, you should show two different colored lines, one for male and another for female. You can pick the colors you want to use, but they should be easily distinguishable. Append a circle at the top of each line for both male and female to create lollipop visualization.
+In `main.js`, the `us-states.json` file is already loaded. You also need to replace `sampleData.csv` and load your processed CSV(s). 
 
-> 🔍 **Hint:** Since your x-scale uses Javascript `Date` objects, you should convert your year values to Date objects to correctly call your x scale. You can do this operation here, or when you do your data wrangling in Step 3 (instead of converting to numerics, convert to `Date` objects).
+> 🔍 **Note:** You can either combine the relevant data to 1 CSV or have multiple CSVs.
 
-> 🔍 **Hint:** You don't want the two lollipops for a year to overlap, so give them each a small amount of offset. In the image above, the male lollipop for each year is offset left 5 pixels, and the female lollipop is offset right 5 pixels.
+Once the data is loaded,  store it in one or more global variables so that when the year changes we don't need to load the datasets again.
 
-> 🔍 **Hint:** Give a bit of margin around the outside of your chart so your objects don't run off the edge of the `svg`.
+Since D3 doesn't have any information about the attribute types of the new files, it interprets every data value as a string. To use the quantatitive columns as such, you'll need to do some data wrangling to convert each row of the data to the correct numeric format. Change the attribute type of candidatevotes from string to numeric. D3's data loading functions (e.g. d3.csv) have a provision for that, which is documented [here](https://github.com/d3/d3-fetch/blob/master/README.md). You can also do the converting after you have loaded the data.
 
+### Step 6: Update the Row
+Selecting the year from the select menu should show information about the Winning Party, Winning President and winning Vice President. 
 
-### Step 6:
-It’s important to help your audience understand what is going on in the chart. To do this, add a legend at the upper right corner of the chart. The legend should have a square showing the colors, with labels reading "Female Employment Rate" and "Male Employment Rate". Then add titles for your x-axis and y-axis: "Year" for the x-axis and a rotated "Employment Rate" for the y-axis.
+The finished row should look like this:
 
-### Step 7:
-As a final step, make the chart interactive. When the user updates the country value in the drop down, the chart should be redrawn to show the values for the newly selected country.
+![Completed Row](images/row.png)
 
-Once you are finished with Step 7 and you have your chart looking similar to the screenshot above, you are done! Be sure to commit and push your completed code by the deadline.
+### Step 7: Complete the Map 
+We want to visualize the election results by coloring the states according to the winning party (blue for democratic party and red for republican party).
 
-### Extra Credit:
+First you need to create the state-wise boundary of the US Map. For this, you can use the D3 function `geoAlberUSA` to draw the map of the United States and project the states on top of the projections by using the `geoPath` function which converts the GeoJSON to SVG paths.
 
-Instead of simply redrawing the chart in Step 7 when a user selects a different country, use D3 transitions to animate each lollipop from the old to new values (that is, either growing or shrinking). This step is worth +2 extra credit points.
+Next, for a particular year and state, calculate which party got higher votes and color the state with the winning party's color.
 
----
+> 🔍 **Hint:** You can use the `fill` style to provide the color 
 
-## Grading
+### Step 8: Add Legends
+It’s important to help your audience understand what is going on in the chart. To do this, add a legend at the top of the chart. The legend should have a square showing the colors, with labels reading "Republican" and "Democratic". 
 
-This assignment is worth 10 points.
-- (1 pt each) Steps 0, 1, 2, 3, 6, and 7
-- (2 pts each) Steps 4 and 5
+The finished map should look like this:
+
+![Completed Map](images/map.png)
+
+### Step 9: Add Interactions
+As a final step, make the chart interactive. Hovering over a state should add a tool tip containing information about the state name and the number of votes that both the parties got that year.
+
+> 🔍 **Hint:** You can use the `mouseover` function to load the tool tip when the user hovers over a state and the `mouseout` function to remove the tool tip when the user hovers out of the state's boundaries
+
+Once you are finished with Step 9 and you have your chart looking similar to the screenshot shared earlier, you are done! Be sure to commit and push your completed code by the deadline.
