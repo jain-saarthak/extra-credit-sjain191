@@ -13,11 +13,18 @@ The purpose of this homework is to teach you some basic grammar and functionalit
 
 The starter codes for homework assignments is given in D3 version v7, which is the latest version of D3. 
 
-## Problem Statement
+## Purpose
 A map helps the viewers to visualize a dataset a geographical dataset better. In this assignment, we will be implementing a simplified version of The American Presidency Project (https://www.presidency.ucsb.edu/statistics/elections) that helps the viewers analyze the results of all the U.S. Presidential Elections. For this assignment, we are just interested in analyzing the trends of the recent elections (starting from 2000). 
 
-## To complete the assignment
+## Dataset
+This assignment provides one JSON file in the `data/` folder: `us-states.json` that contains the coordinates of a state-wise map of the US. 
 
+You need to download the remaining datasets and place them in the `data/` folder. 
+
+More information about where to access the dataset from is given in Step 3.
+
+
+## To Start the Assignment
 * Clone this code to your local machine.
 * Using a local server (such as HTTP Simple Server), open the **index.html** file. Remember, homeworks will be graded using Firefox and Python's HTTP Simple Server.
 * Modify the source code according to the instructions below.
@@ -45,8 +52,6 @@ The finished dropdown should look like this:
 ![Completed Dropdown](images/dropdown.png)
 
 ### Step 3: Download the Dataset 
-This assignment provides one JSON file in the `data/` folder: `us-states.json` that contains the coordinates of a state-wise map of the US. 
-You need to download the remaining datasets and place them in the `data/` folder. 
 You can download the state-wise election results from 1976-2020 from MIT Election Lab https://electionlab.mit.edu/. Look for the dataset titled `U.S. President 1976–2020` and use filters like election type (federal) and units (by state) to make your search easy. 
 Additionally, you need to download the election results which can be found here: https://www.kaggle.com/datasets/brandonconrady/us-presidential-election-results-1788-2020. Look for the file titled Winners.csv and download it to your `data/` folder.
 
