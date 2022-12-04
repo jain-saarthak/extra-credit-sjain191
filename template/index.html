@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang='en'>
     <head>
-        <title>Homework: D3 Choropleth Map - CSE 578</title>
+        <title>Homework: D3 Maps - CSE 578</title>
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <script src="js/main.js"></script>
     </head>
     <body>
         <div class="container">
-            <h1 class="text-center">Homework: D3 Choropleth Map</h1>
+            <h1 class="text-center">Homework: D3 Maps</h1>
             <h3 class="text-center">Your Name - Your Email</h3>
-            <h3 class="text-center">Your Title</h3>
-            <div class="row">
-                <div class="col-1">Attribute: </div>
-                <div class="col-3">
-                    <!-- add your select here-->
+            <h3 class="text-center">Presidential Elections in the United States</h3>
+            <div class="body">
+                <div class="row">
+                    <div class="col-2">Election Year: </div>
+                    <div class="col-1">
+                        <!-- add your select dropdown here-->
+                    </div>
+                    <div class="col-1">Winning Party: <span id="winningParty">NONE</span></div>
+                    <div class="col-2">Winning President: <span id="winningPresident">NONE</span></div>
+                    <div class="col-3">Winning Vice-President: <span id="winningVicePresident">NONE</span></div>
                 </div>
-            </div>
-            <div id="my_dataviz">
-                <!-- create svg here -->
+                <div class="svgBody">
+                    <div id="my_dataviz">
+                        <!-- create svg here -->
+                    </div>
+                </div>
             </div>
         </div> <!-- end of the container div -->
     </body>

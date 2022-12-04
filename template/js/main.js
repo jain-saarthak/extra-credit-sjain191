@@ -5,15 +5,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // Hint: create or set your svg element inside this function
 
     // This will load your CSV files and store them into an array.
-    Promise.all([d3.csv('data/sampleData.csv')])
+    Promise.all([d3.json('data/us-states.json'), d3.csv('data/sampleData.csv')])
         .then(function (values) {
-            const data = values[0]
+            const json = values[0]
+            const data = values[1]
             console.log('loaded sampleData.csv', data)
 
             // Hint: This is a good spot for doing data wrangling
+
+            drawMap()
         })
 })
 
 // Use this function to draw the choropleth map
-function drawChoroplethMap() {
+function drawMap() {
 }
